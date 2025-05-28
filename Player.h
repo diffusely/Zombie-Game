@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Weapon.h"
+#include "Collider.h"
 
 #include <exception>
 #include <iostream>
@@ -19,11 +20,17 @@ public:
 
 
 	void move(const float& dt);
-
-	void update(const float& dt, const sf::RenderWindow& window);
-	void draw(sf::RenderWindow& window);
+	void update(const float& dt, const sf::RenderWindow* window);
+	void draw(sf::RenderWindow* window);
 	void shoot();
 	void aimDir(const sf::Vector2f& mouseWorldPos);
+
+	
+
+	// Get
+	Collider& getCollider() { return collider; }
+	Weapon& getWeapon() { return *weapon.get(); };
+	sf::Vector2f getPos() const { return player.getPosition(); };
 	
 private:
 
@@ -32,10 +39,12 @@ private:
 	sf::Texture texture;
 	sf::Sprite player;
 
+	Collider collider;
+
 	std::unique_ptr<Weapon> weapon;
 
 private:
-
 	void initSprite();
+
 };
 

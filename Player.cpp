@@ -2,7 +2,8 @@
 
 Player::Player(float speed)
     : player_speed(speed)
-    , weapon(std::make_unique<Weapon>(500))
+    , weapon(std::make_unique<Weapon>(500.f, 0.3f))
+    , collider(sf::Vector2f(400.f, 300.f), 70)
 {
     initSprite();
 }
@@ -29,20 +30,27 @@ void Player::move(const float &dt)
         player.move(player_speed * dt, 0);
 }
 
-void Player::update(const float& dt, const sf::RenderWindow& window)
+void Player::update(const float& dt, const sf::RenderWindow* window)
 {
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && weapon->canFire())
+        shoot();
     weapon->update(dt, window);
+    collider.setPos(player.getPosition());
 }
 
-void Player::draw(sf::RenderWindow& window)
+void Player::draw(sf::RenderWindow* window)
 {
-	window.draw(player);
+	window->draw(player);
+    collider.draw(window);
+    weapon->draw(window);
 }
 
 void Player::shoot()
 {
-    sf::Vector2f muzzleOffset(std::cos(player.getRotation() * PI / 180.0f) * 50,
-        std::sin(player.getRotation() * PI / 180.0f) * 50);
+    float angleRad = (player.getRotation() + 120) * PI / 180.0f;
+
+    sf::Vector2f muzzleOffset(std::cos(angleRad) * 90,
+        std::sin(angleRad) * 90);
     sf::Vector2f bulletPos = player.getPosition() + muzzleOffset;
     weapon->shoot(bulletPos, player.getRotation());
 }
@@ -52,9 +60,11 @@ void Player::aimDir(const sf::Vector2f& mouseWorldPos)
     sf::Vector2f pos = player.getPosition();
     float dx = mouseWorldPos.x - pos.x;
     float dy = mouseWorldPos.y - pos.y;
-    float angle = std::atan2(dy, dx) * 180.0f / PI;
+
+    float angle = std::atan2(dy, dx) * 180.0f / PI - 105;
     player.setRotation(angle);
 }
+
 
 void Player::initSprite()
 {

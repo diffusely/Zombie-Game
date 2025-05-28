@@ -2,21 +2,22 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include "Game.h"
 
-struct Bullet {
-    sf::CircleShape shape;
-    sf::Vector2f velocity;
-
-    void update(float dt) {
-        shape.move(velocity * dt);
+int main()
+{
+    try
+    {
+        Game game(1200, 800, "Zombie");
+        game.run();
     }
-
-    bool isOffscreen(const sf::RenderWindow& window) const {
-        sf::Vector2f pos = shape.getPosition();
-        return (pos.x < 0 || pos.y < 0 || pos.x > window.getSize().x || pos.y > window.getSize().y);
+    catch (const std::exception& e)
+    {
+        std::cout << e.what() << "\n";
     }
-};
-
+    
+}
+/*
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Move and Rotate Sprite");
@@ -48,7 +49,7 @@ int main()
                 window.close();
         }
 
-        float dt = clock.restart().asSeconds();
+       
 
         // --- Player Movement ---
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -71,7 +72,7 @@ int main()
         sprite.setRotation(angle);
 
         // --- Fire Bullet ---
-        static bool wasPressed = false;
+        static bool wasPressed = false; 
         bool isPressed = sf::Mouse::isButtonPressed(sf::Mouse::Left);
         if (isPressed && !wasPressed) {
             float angleRad = (sprite.getRotation() + 100) * 3.14159265f / 180.0f;
@@ -121,4 +122,4 @@ int main()
     }
 
     return 0;
-}
+}*/
