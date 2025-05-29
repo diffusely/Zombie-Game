@@ -35,6 +35,10 @@ private:
 
 private:
 
+	void initBackgorund();
+
+private:
+
 	int width;
 	int height;
 
@@ -51,6 +55,15 @@ private:
 	// Mouse
 	sf::Vector2i mouse_pixel_pos{};
 	sf::Vector2f mouse_world_pos{};
+
+private:
+	// View
+	sf::View view;
+
+private:
+	// Background
+	sf::Texture bacgkround_texture;
+	sf::Sprite background_sprite;
 
 };
 

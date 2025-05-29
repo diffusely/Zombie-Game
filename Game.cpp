@@ -5,7 +5,11 @@ Game::Game(int width, int height, std::string name)
 	, height(height)
 	, window(std::make_unique<sf::RenderWindow>(sf::VideoMode(width, height), name))
 	, player(std::make_unique<Player>(200.f))
+	, view(sf::FloatRect(0.f, 0.f, 800.f, 600.f))
 {
+	initBackgorund();
+	view.setCenter(player.get()->getPos());
+	view.zoom(1.5f);
 	enemies.push_back(std::make_unique<Enemy>(sf::Vector2f(100.f, 100.f)));
 	enemies.push_back(std::make_unique<Enemy>(sf::Vector2f(140.f, 140.f)));
 	enemies.push_back(std::make_unique<Enemy>(sf::Vector2f(300.f, 140.f)));
@@ -17,6 +21,7 @@ Game::Game(int width, int height, std::string name)
 void Game::update()
 {
 	updateEvent();
+
 	updateDeltaTime();
 	updateMousePos();
 
@@ -39,14 +44,21 @@ void Game::update()
 		}
 	}
 
+
 	player->aimDir(mouse_world_pos);
 	player->move(dt);
 	player->update(dt, window.get());
+
+	view.setCenter(player.get()->getPos());
+	window->setView(view);
+
 }
 
 void Game::render()
 {
 	window->clear();
+
+	window->draw(background_sprite);
 
 	player->draw(window.get());
 	if (!enemies.empty())
@@ -54,7 +66,7 @@ void Game::render()
 		for (auto &it : enemies)
 			it->draw(window.get());
 	}
-		
+	
 	window->display();
 }
 
@@ -99,7 +111,6 @@ void Game::checkCollison()
 	if (enemies.empty())
 		return;
 
-	// Проверка столкновения игрока и врагов
 	for (auto& enemy : enemies)
 	{
 		if (player->getCollider().intersects(enemy->getCollider()))
@@ -113,8 +124,6 @@ void Game::checkCollison()
 			player->getCollider().setColor(sf::Color::Blue);
 		}
 	}
-
-	// Урон по врагам от пуль
 	auto& bullets = player->getWeapon().getBullets();
 	for (auto& bullet : bullets)
 	{
@@ -129,15 +138,24 @@ void Game::checkCollison()
 		}
 	}
 
-	// Удаление пуль
 	bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
 		[](const std::unique_ptr<Bullet>& bullet) {
 			return bullet->shouldBeDeleted();
 		}), bullets.end());
 
-	// Удаление врагов
 	enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
 		[](const std::unique_ptr<Enemy>& enemy) {
 			return enemy->isDead();
 		}), enemies.end());
+}
+
+void Game::initBackgorund()
+{
+	if (!bacgkround_texture.loadFromFile("assets/Map1.jpg"))
+	{
+		throw std::runtime_error("background Map error!");
+	}
+
+	this->background_sprite.setTexture(bacgkround_texture);
+	background_sprite.setScale(2.f, 2.f);
 }

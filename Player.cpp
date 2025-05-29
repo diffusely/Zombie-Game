@@ -2,8 +2,8 @@
 
 Player::Player(float speed)
     : player_speed(speed)
-    , weapon(std::make_unique<Weapon>(500.f, 0.3f))
-    , collider(sf::Vector2f(400.f, 300.f), 70)
+    , weapon(std::make_unique<Weapon>(1000.f, 0.1f))
+    , collider(sf::Vector2f(400.f, 300.f), 35)
 {
     initSprite();
 }
@@ -49,8 +49,8 @@ void Player::shoot()
 {
     float angleRad = (player.getRotation() + 120) * PI / 180.0f;
 
-    sf::Vector2f muzzleOffset(std::cos(angleRad) * 90,
-        std::sin(angleRad) * 90);
+    sf::Vector2f muzzleOffset(std::cos(angleRad) * 45,
+        std::sin(angleRad) * 45);
     sf::Vector2f bulletPos = player.getPosition() + muzzleOffset;
     weapon->shoot(bulletPos, player.getRotation());
 }
@@ -78,4 +78,5 @@ void Player::initSprite()
     player.setOrigin(65, 75);
     player.setPosition(400, 300);
     player.setRotation(160);
+    player.setScale(0.5f, 0.5f);
 }

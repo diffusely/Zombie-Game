@@ -25,10 +25,18 @@ void Bullet::update(const float& dt)
 
 bool Bullet::isOffScreen(const sf::RenderWindow* window) const
 {
+    const sf::View& view = window->getView();
+    sf::Vector2f center = view.getCenter();
+    sf::Vector2f size = view.getSize();
+
+    float left = center.x - size.x / 2.f;
+    float right = center.x + size.x / 2.f;
+    float top = center.y - size.y / 2.f;
+    float bottom = center.y + size.y / 2.f;
+
     sf::Vector2f pos = bullet.getPosition();
-    return (pos.x < 0 || pos.y < 0 
-        || pos.x > window->getSize().x 
-        || pos.y > window->getSize().y);
+
+    return (pos.x < left || pos.x > right || pos.y < top || pos.y > bottom);
 }
 
 void Bullet::draw(sf::RenderWindow* window)

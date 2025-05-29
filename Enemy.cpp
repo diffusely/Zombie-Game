@@ -3,7 +3,7 @@
 
 
 Enemy::Enemy(sf::Vector2f pos)
-    : collider(sf::Vector2f(100,100), 70)
+    : collider(sf::Vector2f(100,100), sf::Vector2f(80, 40))
     , health(100.f)
 {
     initSprite(pos);
@@ -11,6 +11,7 @@ Enemy::Enemy(sf::Vector2f pos)
 
 Enemy::~Enemy()
 {
+
 }
 
 void Enemy::move(const float& dt, sf::Vector2f pos)
@@ -32,6 +33,8 @@ void Enemy::update(const float& dt, sf::Vector2f pos)
     collider.setPos(enemy.getPosition());
     sf::Vector2f direction = pos - enemy.getPosition();
     float angle = std::atan2(direction.y, direction.x) * 180.f / PI - 90;
+
+    collider.setAngle(angle);
     enemy.setRotation(angle);
 }
 
@@ -53,4 +56,5 @@ void Enemy::initSprite(sf::Vector2f pos)
     enemy.setTextureRect(sf::IntRect(55, 95, 185, 160));
     enemy.setOrigin(92, 80);
     enemy.setPosition(pos);
+    enemy.setScale(0.5f, 0.5f);
 }

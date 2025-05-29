@@ -18,10 +18,12 @@ public:
 
     Type getType() const;
     sf::Vector2f getPos() const;
-    void setPos(const sf::Vector2f& newPos);
+  
 
     sf::FloatRect getBounds() const;
 
+    void setPos(const sf::Vector2f& newPos);
+    void setAngle(float angle);
     void setColor(sf::Color color);
 
 private:
