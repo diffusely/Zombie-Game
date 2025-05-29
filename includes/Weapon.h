@@ -1,6 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+
 #include <vector>
 #include <cmath>
 #include <iostream>
@@ -29,6 +31,10 @@ public:
 
 private:
 
+	void initSound();
+
+private:
+
 	std::vector<std::unique_ptr<Bullet>> bullets;
 	WeaponType type{};
 	float bullet_speed;
@@ -37,5 +43,11 @@ private:
 	// Time
 	sf::Clock fire_clock{};
 	float fire_cooldown;
+
+private:
+	// Sound
+	sf::SoundBuffer shoot_buffer;
+	sf::Sound shoot_sound;
+
 };
 

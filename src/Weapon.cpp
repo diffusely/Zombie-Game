@@ -4,18 +4,18 @@ Weapon::Weapon(float speed, float cooldown)
     : bullet_speed(speed)
     , fire_cooldown(cooldown)
 {
-
+    initSound();
 }
 
 Weapon::Weapon()
-    : bullet_speed(500)
-    , fire_cooldown(0.3f)
+    : Weapon(500, 0.3f)
 {
 
 }
 
 void Weapon::shoot(const sf::Vector2f& position, float rotationDegrees)
 {
+    shoot_sound.play();
     fire_clock.restart();
     float angleRad = (rotationDegrees + 100) * PI / 180.0f;
     sf::Vector2f velocity(std::cos(angleRad) * bullet_speed, std::sin(angleRad) * bullet_speed);
@@ -44,4 +44,16 @@ void Weapon::draw(sf::RenderWindow* window)
 bool Weapon::canFire()
 {
     return fire_clock.getElapsedTime().asSeconds() >= fire_cooldown;
+}
+
+void Weapon::initSound()
+{
+    if (!shoot_buffer.loadFromFile("audio/pistol/shoot.mp3"))
+    {
+        throw std::runtime_error("Shoot sound error!");
+    }
+
+    shoot_sound.setBuffer(shoot_buffer);
+    shoot_sound.setVolume(20.f);
+
 }

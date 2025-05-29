@@ -31,11 +31,20 @@ private:
 	void updateDeltaTime();
 	void updateMousePos();
 
+
+	void updateEnemies();
+	void updatePlayer();
+	void updateView();
+
+
 	void checkCollison();
+
+
 
 private:
 
 	void initBackgorund();
+	void initSound();
 
 private:
 
@@ -62,8 +71,13 @@ private:
 
 private:
 	// Background
-	sf::Texture bacgkround_texture;
+	sf::Texture background_texture;
 	sf::Sprite background_sprite;
+
+private:
+	// Sound
+	sf::SoundBuffer fight_buffer;
+	sf::Sound fight_sound;
 
 };
 

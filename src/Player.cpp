@@ -2,7 +2,7 @@
 
 Player::Player(float speed)
     : player_speed(speed)
-    , weapon(std::make_unique<Weapon>(1000.f, 0.1f))
+    , weapon(std::make_unique<Weapon>(1000.f, 0.5f))
     , collider(sf::Vector2f(400.f, 300.f), 35)
 {
     initSprite();
@@ -76,7 +76,7 @@ void Player::initSprite()
     player.setTexture(texture);
     player.setTextureRect(sf::IntRect(50, 163, 115, 150));
     player.setOrigin(65, 75);
-    player.setPosition(400, 300);
+    player.setPosition(601, 401);
     player.setRotation(160);
     player.setScale(0.5f, 0.5f);
 }
