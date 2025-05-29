@@ -48,7 +48,7 @@ bool Weapon::canFire()
 
 void Weapon::initSound()
 {
-    if (!shoot_buffer.loadFromFile("audio/pistol/shoot.mp3"))
+    if (!shoot_buffer.loadFromFile("audio/pistol/shoot.wav"))
     {
         throw std::runtime_error("Shoot sound error!");
     }

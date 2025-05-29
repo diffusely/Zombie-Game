@@ -200,7 +200,7 @@ void Game::initBackgorund()
 
 void Game::initSound()
 {
-	if (!fight_buffer.loadFromFile("audio/music/fight1.mp3"))
+	if (!fight_buffer.loadFromFile("audio/music/fight1.wav"))
 	{
 		throw std::runtime_error("Fight sound error!");
 	}
