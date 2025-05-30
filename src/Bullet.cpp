@@ -1,15 +1,24 @@
 #include "Bullet.h"
 
-Bullet::Bullet(sf::Vector2f pos, sf::Vector2f vel)
+Bullet::Bullet(sf::Vector2f pos, sf::Vector2f vel, float angle)
     : velocty(vel)
     , collider(pos, 5.f)
     , damage(25.f)
 {
-    bullet.setRadius(5);
-    bullet.setFillColor(sf::Color::Yellow);
-    bullet.setOrigin(5, 5);
-    bullet.setPosition(pos);
+    //bullet.setRadius(5);
+    //bullet.setFillColor(sf::Color::Yellow);
+    bullet.setOrigin(20, 5);
+    sf::Vector2f temp = pos;
+    bullet.setPosition(temp);
+    if (!texture.loadFromFile("assets/weapon/fire.png"))
+    {
+        throw std::runtime_error("Fire.png load error!");
+    }
 
+    bullet.setTexture(texture);
+    bullet.setTextureRect(sf::IntRect(400, 200, 20, 25));
+    bullet.setRotation(angle);
+    //bullet.setScale(0.5f, 0.5f);
 }
 
 Bullet::~Bullet()
@@ -42,9 +51,16 @@ bool Bullet::isOffScreen(const sf::RenderWindow* window) const
 void Bullet::draw(sf::RenderWindow* window)
 {
     window->draw(bullet);
+    collider.draw(window);
 }
 
 void Bullet::initBullet()
 {
+        if (!texture.loadFromFile("assets/weapon/fire.png"))
+    {
+        throw std::runtime_error("Fire.png load error!");
+    }
+
+    bullet.setTexture(texture);
 
 }

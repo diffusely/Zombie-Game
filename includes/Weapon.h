@@ -19,7 +19,7 @@ public:
 	Weapon(float speed, float cooldown);
 	Weapon();
 
-	void shoot(const sf::Vector2f& position, float rotationDegrees);
+	void shoot(const sf::Vector2f& position, float rotationDegrees, float angle);
 	void update(const float &dt, const sf::RenderWindow* window);
 	void draw(sf::RenderWindow* window);
 

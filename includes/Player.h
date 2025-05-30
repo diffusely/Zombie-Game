@@ -31,10 +31,14 @@ public:
 	Collider& getCollider() { return collider; }
 	Weapon& getWeapon() { return *weapon.get(); };
 	sf::Vector2f getPos() const { return player.getPosition(); };
+
+	float getAngle() const { return angle; };
 	
 private:
 
 	float player_speed;
+	float angle;
+
 
 	sf::Texture texture;
 	sf::Sprite player;
@@ -42,6 +46,8 @@ private:
 	Collider collider;
 
 	std::unique_ptr<Weapon> weapon;
+
+	
 
 private:
 	void initSprite();

@@ -38,6 +38,7 @@ private:
 
 
 	void checkCollison();
+	void spawnEnemies();
 
 
 
@@ -45,6 +46,7 @@ private:
 
 	void initBackgorund();
 	void initSound();
+	void initBlood();
 
 private:
 
@@ -78,6 +80,23 @@ private:
 	// Sound
 	sf::SoundBuffer fight_buffer;
 	sf::Sound fight_sound;
+
+private:
+
+	// Blood
+	sf::Texture texture;
+	sf::Sprite blood;
+
+private:
+
+	// Enemy spaw
+	std::vector<sf::Vector2f> checkpoints = {
+    {0.f, 800.f},
+    {800.f, 1400.f},
+    {1400.f, 800.f}
+	};
+
+	std::vector<float> spawnTimers = {0.2f, 0.3f, 0.4f};
 
 };
 

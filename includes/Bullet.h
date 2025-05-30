@@ -7,7 +7,7 @@ class Bullet
 {
 public:
 
-	Bullet(sf::Vector2f pos, sf::Vector2f vel);
+	Bullet(sf::Vector2f pos, sf::Vector2f vel, float angle);
 	~Bullet();
 
 	void update(const float& dt);
@@ -23,10 +23,10 @@ public:
 private:
 	bool deleted = false;
 	sf::Texture texture;
-	//sf::Sprite bullet;
+	sf::Sprite bullet;
 
 	sf::Vector2f velocty;
-	sf::CircleShape bullet;
+	//sf::CircleShape bullet;
 
 	Collider collider;
 	float damage;

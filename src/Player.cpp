@@ -2,7 +2,7 @@
 
 Player::Player(float speed)
     : player_speed(speed)
-    , weapon(std::make_unique<Weapon>(1000.f, 0.5f))
+    , weapon(std::make_unique<Weapon>(1000.f, 0.2f))
     , collider(sf::Vector2f(400.f, 300.f), 35)
 {
     initSprite();
@@ -52,7 +52,7 @@ void Player::shoot()
     sf::Vector2f muzzleOffset(std::cos(angleRad) * 45,
         std::sin(angleRad) * 45);
     sf::Vector2f bulletPos = player.getPosition() + muzzleOffset;
-    weapon->shoot(bulletPos, player.getRotation());
+    weapon->shoot(bulletPos, player.getRotation(), angle);
 }
 
 void Player::aimDir(const sf::Vector2f& mouseWorldPos)
@@ -61,7 +61,7 @@ void Player::aimDir(const sf::Vector2f& mouseWorldPos)
     float dx = mouseWorldPos.x - pos.x;
     float dy = mouseWorldPos.y - pos.y;
 
-    float angle = std::atan2(dy, dx) * 180.0f / PI - 105;
+    angle = std::atan2(dy, dx) * 180.0f / PI - 105;
     player.setRotation(angle);
 }
 
@@ -76,7 +76,7 @@ void Player::initSprite()
     player.setTexture(texture);
     player.setTextureRect(sf::IntRect(50, 163, 115, 150));
     player.setOrigin(65, 75);
-    player.setPosition(601, 401);
+    player.setPosition(801, 601);
     player.setRotation(160);
     player.setScale(0.5f, 0.5f);
 }

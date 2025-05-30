@@ -16,6 +16,9 @@ public:
 
 	void move(const float& dt, sf::Vector2f);
 
+
+	void updateAnimation(const float &dt);
+
 	void update(const float& dt, sf::Vector2f pos);
 	void draw(sf::RenderWindow* window);
 
@@ -38,6 +41,20 @@ private:
 
 private:
 
+	// Animation
+
+	int currentFrame;
+    float frameTime;
+    float frameTimer;
+    sf::Vector2i frameSize;
+    int totalFrames;
+
+
+private:
+
 	void initSprite(sf::Vector2f pos);
+
+
+
 };
 

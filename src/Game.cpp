@@ -8,8 +8,9 @@ Game::Game(int width, int height, std::string name)
 	, view(sf::FloatRect(0.f, 0.f, 1200.f, 800.f))
 {
 	initBackgorund();
+	//initBlood();
 	initSound();
-
+	
 
 	view.setCenter(player.get()->getPos());
 	//view.zoom(1.5f);
@@ -106,6 +107,8 @@ void Game::updateEnemies()
 			it->update(dt, player.get()->getPos());
 		}
 	}
+
+	spawnEnemies();
 }
 
 void Game::updatePlayer()
@@ -173,8 +176,10 @@ void Game::checkCollison()
 		}
 	}
 
+
 	bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
 		[](const std::unique_ptr<Bullet>& bullet) {
+			
 			return bullet->shouldBeDeleted();
 		}), bullets.end());
 
@@ -182,6 +187,23 @@ void Game::checkCollison()
 		[](const std::unique_ptr<Enemy>& enemy) {
 			return enemy->isDead();
 		}), enemies.end());
+}
+
+void Game::spawnEnemies()
+{
+
+	const float spawnInterval = 5.f;
+
+    for (size_t i = 0; i < checkpoints.size(); ++i)
+    {
+        spawnTimers[i] += dt;
+
+        if (spawnTimers[i] >= spawnInterval)
+        {
+            spawnTimers[i] = 0.f;
+            enemies.push_back(std::make_unique<Enemy>(checkpoints[i]));
+        }
+    }
 }
 
 void Game::initBackgorund()
@@ -195,6 +217,7 @@ void Game::initBackgorund()
 	background_sprite.setScale(1.5f, 1.5f);
 	//background_sprite.setOrigin(0.f, 0.f);
 	background_sprite.setPosition(0.f, 0.f);
+	background_sprite.setColor(sf::Color(100, 100, 100));
 
 }
 
@@ -209,4 +232,15 @@ void Game::initSound()
 	fight_sound.setVolume(60.f);
 	fight_sound.setLoop(true);
 	fight_sound.play();
+}
+
+void Game::initBlood()
+{
+	if (!texture.loadFromFile("assets/blood/blood.jpg"))
+	{
+		throw std::runtime_error("Blood load error!");
+	}
+
+	blood.setTexture(texture);
+	//blood.setTextureRect(sf::IntRect(0, 0, 20, 20));
 }
