@@ -179,7 +179,6 @@ void Game::checkCollison()
 
 	bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
 		[](const std::unique_ptr<Bullet>& bullet) {
-			
 			return bullet->shouldBeDeleted();
 		}), bullets.end());
 

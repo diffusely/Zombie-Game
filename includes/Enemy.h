@@ -3,8 +3,9 @@
 #include "Defines.h"
 #include "Collider.h"
 
+#include <iostream>
 #include <SFML/Graphics.hpp>
-
+#include <SFML/Audio.hpp>
 #include <vector>
 
 class Enemy
@@ -26,7 +27,7 @@ public:
 
 	float getHelath() const { return health; }
 
-	bool isDead() { return health <= 0 ? true : false; }
+	bool isDead();
 
 	void takeDamage(float damage) { health -= damage; }
 
@@ -52,8 +53,19 @@ private:
 
 private:
 
-	void initSprite(sf::Vector2f pos);
+	// Sound
+	sf::SoundBuffer dead_buffer;
+	sf::Sound dead_sound;
 
+	bool dead = false;
+	sf::Clock deathClock;
+	bool deathSoundPlayed = false;
+
+
+private:
+
+	void initSprite(sf::Vector2f pos);
+	void initSound();
 
 
 };
